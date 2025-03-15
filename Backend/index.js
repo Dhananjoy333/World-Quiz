@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, { query } from "express"
 import cors from "cors";
 import path,{dirname} from "path";
@@ -16,11 +19,11 @@ app.use(cors({origin: "http://localhost:5173"}));
 
 //database
 const db = new pg.Client({
-  user : "postgres",
-  host : "localhost",
-  database : "World",
-  password : "Dhananjoy333",
-  port : 5432,
+  user : process.env.DATABASE_USER,
+  host : process.env.DATABASE_HOST,
+  database : process.env.DATABASE_NAME,
+  password : process.env.DATABASE_PASSWORD,
+  port : process.env.DATABASE_PORT,
 })
 
 async function connectDB() {
