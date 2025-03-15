@@ -1,0 +1,19 @@
+.guess-country{
+    background-image: url("../../public/quesBg.jpg");
+    height: 100vh;
+    display: flex;
+}
+.country-flag{
+    padding-left: 370px;
+}
+.guess-capital-highest-score{
+    font-size: 40px;
+    align-self: center;
+  }
+  .crown{
+    padding-bottom: 8px;
+    padding-right: 10px;
+    vertical-align: middle;
+    height: 70px;
+    width: auto;
+  }

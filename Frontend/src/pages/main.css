@@ -1,0 +1,80 @@
+.main-page {
+    font-size: 30px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.left, .right {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+
+/* Background images stay here */
+.left {
+    background-image: url("../../public/background.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.right {
+    background-image: url("../../public/quesBg.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* Semi-transparent box for text */
+.left-content, .right-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    background: rgba(35, 214, 246, 0.9); /* Semi-transparent black */
+    border-radius: 10px; /* Rounded corners */
+    color: white; /* Ensures text is visible */
+    max-width: 60%; /* Limits width to avoid taking up full space */
+}
+
+/* BUTTON 1: Red Fills from Right to Left */
+.Go-GuessCapital-btn {
+    background: linear-gradient(to right, rgb(154, 235, 241) 0%, rgb(253, 122, 122) 50%);
+    width: 120px;
+    transition: background-position 0.4s ease-in-out;
+    background-size: 200% 100%;
+    background-position: left;
+}
+
+.Go-GuessCapital-btn:hover {
+    background-position: right;
+}
+
+/* BUTTON 2: Red Fills from Left to Right */
+.Go-GuessCountry-btn {
+    background: linear-gradient(to left, rgb(154, 235, 241) 0%, rgb(253, 122, 122) 50%);
+    width: 120px;
+    transition: background-position 0.4s ease-in-out;
+    background-size: 200% 100%;
+    background-position: right;
+}
+
+.Go-GuessCountry-btn:hover {
+    background-position: left;
+}
+
+.left-score, .right-score{
+    font-weight: 800;
+}
+
+.btn{
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 10px;
+}
