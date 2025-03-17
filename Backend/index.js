@@ -19,17 +19,14 @@ app.use(cors({origin: "http://localhost:5173"}));
 
 //database
 const db = new pg.Client({
-  user : process.env.DATABASE_USER,
-  host : process.env.DATABASE_HOST,
-  database : process.env.DATABASE_NAME,
-  password : process.env.DATABASE_PASSWORD,
-  port : process.env.DATABASE_PORT,
-})
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }  // Required for NeonDB
+});
 
 async function connectDB() {
   try {
     await db.connect();
-    console.log("✅ Connected to PostgreSQL database!");
+    console.log("✅ Connected to NeonDB database!");
   } catch (error) {
     console.error("❌ Database connection error:", error);
   }
