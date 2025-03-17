@@ -18,7 +18,7 @@ const GuessCapital = () => {
   // Fetch question from backend using Axios
   function fetchNewQuestion() {
     axios
-      .get("http://localhost:3000/api/question") 
+      .get("https://world-quiz-backend.onrender.com/api/question") 
       .then((response) => {
         setCountryName(response.data.country);
         setCorrectCapital(response.data.capital) // Update state with received data 
@@ -30,7 +30,7 @@ const GuessCapital = () => {
   //fetching the highest Score from backend
   function fetchHighestScore() {
     axios
-      .get("http://localhost:3000/api/highScore") 
+      .get("https://world-quiz-backend.onrender.com/api/highScore") 
       .then((response) => {
         setHighestScore(response.data.highScoreOfGuessCapital)
       })
@@ -66,7 +66,7 @@ const GuessCapital = () => {
 
     //if score earned in session is higher than highestScore store in db
     if(tempScore > highestScore){
-      const response = await axios.post("http://localhost:3000/api/high-score",{tempScore})
+      const response = await axios.post("https://world-quiz-backend.onrender.com/high-score",{tempScore})
       setHighestScore(response.data.highestScore)
     }
     setIsSubmitted(true)

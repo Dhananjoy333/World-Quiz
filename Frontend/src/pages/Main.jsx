@@ -11,7 +11,7 @@ const Main = () => {
   //fetching the highest Score from backend
   function fetchHighestScore() {
     axios
-      .get("http://localhost:3000/api/highScore") 
+      .get("https://world-quiz-backend.onrender.com/api/highScore") 
       .then((response) => {
         setHighestScoreGuessCapital(response.data.highScoreOfGuessCapital)
         setHighestScoreGuessCountry(response.data.highestScoreOfGuessCountry)

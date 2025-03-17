@@ -16,7 +16,7 @@ const GuessCountry = () => {
     //fetching data from backend
     function getQuestion(){
         axios
-            .get("http://localhost:3000/api/flags")
+            .get("https://world-quiz-backend.onrender.com/api/flags")
             .then((response) =>{
                 setFlag(response.data.country_code)
                 setCorrectCountry(response.data.name)   //will use to check with userinput
@@ -28,7 +28,7 @@ const GuessCountry = () => {
     //fetching the highest Score from backend
   function fetchHighestScore() {
     axios
-      .get("http://localhost:3000/api/highScore") 
+      .get("https://world-quiz-backend.onrender.com/api/highScore") 
       .then((response) => {
         setHighestScore(response.data.highScoreOfGuessCountry)
       })
@@ -61,7 +61,7 @@ const GuessCountry = () => {
 
     //if score earned in session is higher than highestScore store in db
     if(tempScore > highestScore){
-        const response = await axios.post("http://localhost:3000/api/high-score-country",{tempScore})
+        const response = await axios.post("https://world-quiz-backend.onrender.com/api/high-score-country",{tempScore})
         setHighestScore(response.data.highestScore)
     }
     
