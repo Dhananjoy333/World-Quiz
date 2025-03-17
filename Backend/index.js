@@ -51,7 +51,8 @@ async function loadQuestions() {
 
 // Function to get a random question 
 function nextQuestion(getQuestion) {
-  if (getQuestion.length === 0) return { error: "No questions available" };
+  if (!getQuestion || getQuestion.length === 0) 
+    return { error: "No questions available" };
   return getQuestion[Math.floor(Math.random() * getQuestion.length)];
 }
 
