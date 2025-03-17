@@ -118,9 +118,7 @@ app.post("/api/high-score-country", async (req,res)=>{
 
 //rendering
 app.use(express.static(frontendPath));
-app.get("/",async(req,res)=>{
-    nextQuestion()
-    console.log("Sending question: ", question)
+app.get("/",async (req,res)=>{
     res.sendFile(path.join(frontendPath, "index.html"));
 })
 
