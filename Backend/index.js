@@ -10,7 +10,7 @@ import pg from "pg"
 const app = express()
 const port = 3000
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const frontendPath = path.join(__dirname, "../frontend/dist");
+const frontendPath = path.join(__dirname, "../Frontend/dist");
 
 console.log(__dirname)
 console.log(frontendPath)
