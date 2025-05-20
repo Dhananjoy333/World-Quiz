@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import express, { query } from "express"
+import express from "express"
 import cors from "cors";
 import path,{dirname} from "path";
 import {fileURLToPath} from "url"
@@ -15,7 +15,7 @@ const frontendPath = path.join(__dirname, "../Frontend/dist");
 console.log(__dirname)
 console.log(frontendPath)
 // Enable CORS for all routes
-app.use(cors({origin: "http://localhost:5173"}));
+app.use(cors({origin : "*"}));
 
 //database
 const db = new pg.Client({
