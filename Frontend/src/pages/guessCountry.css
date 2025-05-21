@@ -1,5 +1,5 @@
 .guess-country{
-    background-image: url("../../public/quesBg.jpg");
+    background-image: url("../assets/quesBg.jpg");
     height: 100vh;
     display: flex;
 }

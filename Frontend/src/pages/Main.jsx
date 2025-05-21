@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import "./main.css"
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 const Main = () => {
   //highestScore of guess country and guess capital
@@ -11,10 +11,10 @@ const Main = () => {
   //fetching the highest Score from backend
   function fetchHighestScore() {
     axios
-      .get("https://world-quiz-backend.onrender.com/api/highScore") 
+      .get(`${API_BASE_URL}/highScore`) 
       .then((response) => {
         setHighestScoreGuessCapital(response.data.highScoreOfGuessCapital)
-        setHighestScoreGuessCountry(response.data.highestScoreOfGuessCountry)
+        setHighestScoreGuessCountry(response.data.highScoreOfGuessCountry)
       })
       .catch((error) => {
         console.error("Error fetching question:", error);

@@ -1,7 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import axios from "axios";
 import "./guessCapital.css"
-import crown from "../../public/crown.png"
+import crown from "../assets/crown.png"
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
 const GuessCapital = () => {
   //setting states for score, countryName and correctCapital just for checking
@@ -18,7 +19,7 @@ const GuessCapital = () => {
   // Fetch question from backend using Axios
   function fetchNewQuestion() {
     axios
-      .get("https://world-quiz-backend.onrender.com/api/question") 
+      .get(`${API_BASE_URL}/question`) 
       .then((response) => {
         setCountryName(response.data.country);
         setCorrectCapital(response.data.capital) // Update state with received data 
@@ -30,7 +31,7 @@ const GuessCapital = () => {
   //fetching the highest Score from backend
   function fetchHighestScore() {
     axios
-      .get("https://world-quiz-backend.onrender.com/api/highScore") 
+      .get(`${API_BASE_URL}/highScore`) 
       .then((response) => {
         setHighestScore(response.data.highScoreOfGuessCapital)
       })
@@ -66,7 +67,7 @@ const GuessCapital = () => {
 
     //if score earned in session is higher than highestScore store in db
     if(tempScore > highestScore){
-      const response = await axios.post("https://world-quiz-backend.onrender.com/high-score",{tempScore})
+      const response = await axios.post(`${API_BASE_URL}/high-score`,{tempScore})
       setHighestScore(response.data.highestScore)
     }
     setIsSubmitted(true)

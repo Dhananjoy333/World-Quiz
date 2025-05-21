@@ -17,13 +17,13 @@
 
 /* Background images stay here */
 .left {
-    background-image: url("../../public/background.jpg");
+    background-image: url("../assets/background.jpg");
     background-size: cover;
     background-position: center;
 }
 
 .right {
-    background-image: url("../../public/quesBg.jpg");
+    background-image: url("../assets/quesBg.jpg");
     background-size: cover;
     background-position: center;
 }
