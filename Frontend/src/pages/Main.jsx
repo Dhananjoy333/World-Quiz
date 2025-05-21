@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import "./main.css"
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+// const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const API_BASE_URL = "https://world-quiz-backend.onrender.com/api";
 
 const Main = () => {
   //highestScore of guess country and guess capital

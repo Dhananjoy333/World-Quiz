@@ -2,7 +2,8 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import "./guessCountry.css"
 import crown from "../assets/crown.png"
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+// const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const API_BASE_URL = "https://world-quiz-backend.onrender.com/api";
 
 const GuessCountry = () => {
     const [highestScore, setHighestScore] = useState(0)
