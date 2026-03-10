@@ -3,8 +3,6 @@ import GuessCountry from "../pages/GuessCountry"
 import GuessCapital from "../pages/GuessCapital"
 import Main from "../pages/Main"
 
-import React from 'react'
-
 const AppRoutes = () => {
   return (
     <Routes>
