@@ -1,127 +1,331 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');  
-  .guess-capital{
-    background-image: url("../assets/background.jpg");
-    height: 100vh;
-    display: flex;
-    flex: 1;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
+.guess-country{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  font-family:'Press Start 2P', cursive;
+}
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 900px;
-    height: 400px;
-    margin: 15% auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding-top: 10px;
-    font-family: "poppins", sans-serif;
+.bg_img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ui-panel{
+  position: absolute;
+  top: 240px;
+  left: 920px;
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+.top-score{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@keyframes arcade-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px currentColor);
+    opacity: 1;
   }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px currentColor);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px currentColor);
+    opacity: 1;
+  }
+}
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.9; }
+  10% { opacity: 0.98; }
+  100% { opacity: 1; }
+}
+.answer-status {
+  font-size: 32px; /* Slightly larger for impact */
+  font-family: 'Press Start 2P', cursive;
+  text-align: center;
   
-  h1 {
-    text-align: center;
-  }
+  /* Applying the pulse */
+  animation: arcade-pulse 0.6s infinite ease-in-out;
   
-  h3 {
-    margin: 0;
-  }
-  
-  .answer-container {
-    width: 100%;
-    text-align: center;
-  }
-  
-  input {
-    text-align: center;
-    width: 30%;
-    margin: 10px auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    font-weight: 800;
-    letter-spacing: 2px;
-    font-size: large;
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: #ffca00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .horizontal-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  button:hover {
-    background-color: #ffd500;
-  }
-  
-  #result {
-    text-align: center;
-    font-size: 24px;
-  }
-  
-  .checkmark {
-    color: transparent;
-    animation: checkmark 0.5s ease;
-  }
-  
-  .cross {
-    color: transparent;
-    animation: cross 0.5s ease;
-  }
-  
-  @keyframes checkmark {
-    0% {
-      color: transparent;
-    }
-    100% {
-      color: green;
-    }
-  }
-  
-  @keyframes cross {
-    0% {
-      color: transparent;
-    }
-    100% {
-      color: red;
-    }
-  }
-  
-  .restart-button {
-    display: inline-block;
-    background-color: #fff;
-    color: #333;
-    padding: 15px 30px;
-    font-size: 18px;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s;
-  }
+  /* Keeps the text sharp during scaling */
+  backface-visibility: hidden; 
+  animation: arcade-pulse 0.6s infinite ease-in-out, flicker 0.1s infinite;
+}
 
-  .guess-capital-highest-score{
-    font-size: 40px;
-    align-self: center;
-  }
-  .crown{
-    padding-bottom: 8px;
-    padding-right: 10px;
-    vertical-align: middle;
-    height: 70px;
-    width: auto;
-  }
+.correct {
+  color: #00ff66;
+  text-shadow: 3px 3px 0px #000;
+}
+
+.wrong {
+  color: #ff004c; /* Using the same red as your button for consistency */
+  text-shadow: 3px 3px 0px #000;
+}
+
+.highest,
+.current{
+  text-align: center;
+  font-size: 20px;
+  padding: 15px;
+}
+
+.highest h1{
+  color: #00ff66;
+}
+
+.current h1{
+  color: #ffd400;
+}
+
+.center-game{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* Country Name */
+
+.country-name {
+  font-size: 80px;
+  color: #fff;
+  text-transform: uppercase;
+  /* Multi-layered shadow for that 3D arcade depth */
+  text-shadow: 
+    4px 4px 0px #ff00ff, 
+    8px 8px 0px #000000;
+  margin-bottom: 10px;
+  letter-spacing: 5px;
+}
+
+/* Input box */
+
+.capital-input {
+  width: 500px;
+  height: 70px;
+  background: #111;
+  color: #00d9ff;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+  
+  /* Retro Pixel Border Trick */
+  border: 4px solid #fff;
+  box-shadow: 
+    0 0 0 4px #000,
+    0 0 0 8px #00d9ff;
+  
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.capital-input::placeholder {
+  color: #444;
+  font-size: 14px;
+}
+
+/* Submit button */
+
+.submit-btn {
+  width: 300px;
+  height: 75px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 22px;
+  background: #ff004c;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  /* The "3D" Button Effect */
+  box-shadow: 0 10px 0 #800026, 0 10px 20px rgba(0,0,0,0.5);
+  position: relative;
+  transition: all 0.1s;
+}
+
+.submit-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 8px 0 #800026;
+}
+
+.submit-btn:active {
+  transform: translateY(10px);
+  box-shadow: 0 0px 0 #800026;
+  background: #ff2e6d;
+}
+/* Add this to your CSS */
+.ui-panel::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+      rgba(18, 16, 16, 0) 50%, 
+      rgba(0, 0, 0, 0.1) 50%
+  ), linear-gradient(
+      90deg, 
+      rgba(255, 0, 0, 0.03), 
+      rgba(0, 255, 0, 0.01), 
+      rgba(0, 0, 255, 0.03)
+  );
+  z-index: 10;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none; /* Crucial so you can still click buttons! */
+}
+
+.powerups-box {
+  width: 750px;
+  background: #000; /* Pure black looks better for arcade UI */
+  
+  /* Double pixel border effect */
+  border: 4px solid #fff;
+  box-shadow: 
+    0 0 0 4px #000, 
+    0 0 0 8px #00d9ff,
+    0 10px 20px rgba(0, 0, 0, 0.5);
+    
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.powerups-box h3 {
+  margin-bottom: 30px;
+  color: #ffd400; /* High contrast yellow */
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0px #000;
+}
+.powerup {
+  color: white;
+  text-align: center;
+  padding: 5px;
+  width: 180px;
+  border: 4px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+}
+.powerups {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Gives each slot breathing room */
+}
+
+/* The "Selection" Hover Effect */
+.powerup:hover {
+  background: #00d9ff;
+  border-color: #fff;
+  color: #000;
+  transform: scale(1.1);
+}
+
+.powerup p {
+  font-size: 30px;
+  margin-bottom: 15px;
+  /* Adds a neon flicker feel */
+  filter: drop-shadow(0 0 5px #00d9ff);
+}
+
+.powerup:hover p {
+  filter: none;
+  color: #000;
+}
+
+.powerup span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+@keyframes pulse-border {
+  0% { border-color: #fff; }
+  50% { border-color: #ff00ff; }
+  100% { border-color: #fff; }
+}
+
+.powerup.active {
+  animation: pulse-border 0.8s infinite;
+  background: rgba(255, 0, 255, 0.1);
+}
+
+.score-stats {
+  position: absolute;
+  bottom: 350px;
+  left: 490px; 
+  width: 350px;
+  background: #000;
+  
+  /* Straight, thick arcade border */
+  border: 4px solid #fff;
+  box-shadow: 
+    0 0 0 4px #000, 
+    0 0 0 8px #ff00ff; /* Pink outer frame */
+    
+  padding: 25px;
+  color: white;
+  z-index: 5;
+}
+
+.score-stats h3 {
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 25px;
+  color: #ffd400;
+  /* Retro "header" bar */
+  background: #222;
+  padding: 15px;
+  border: 2px solid #444;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 17px;
+  border-bottom: 2px dashed #333; /* Adds a techy separator */
+  padding-bottom: 10px;
+}
+
+.correct-num, 
+.wrong-num {
+  font-size: 23px;
+  padding: 2px 8px;
+  background: #111; /* Dark background for the number "display" */
+  border: 2px solid #333;
+}
+
+.correct-num { 
+  color: #00ff66; 
+  box-shadow: inset 0 0 10px rgba(0, 255, 102, 0.2);
+}
+
+.wrong-num { 
+  color: #ff004c; 
+  box-shadow: inset 0 0 10px rgba(255, 0, 76, 0.2);
+}
+
+/* Decorative corner brackets */
+.score-stats::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 40px;
+  height: 40px;
+  border-right: 6px solid #00d9ff;
+  border-top: 6px solid #00d9ff;
+  pointer-events: none;
+}
