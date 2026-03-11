@@ -1,19 +1,384 @@
+/* Import a Pixel Font - 'Press Start 2P' is the gold standard for retro */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 .guess-country{
-    background-image: url("../assets/quesBg.jpg");
-    height: 100vh;
+    position:relative;
+    height:100vh;
+    width:100vw;
+    overflow:hidden;
+}
+.bg_img{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.left-panel {
+    position: absolute;
+    left: 14%;
+    top: 10%;
+    width: 450px;
+    height: 600px;
     display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    background: #0b1f2a;
+    padding: 24px;
+    /* --- THE FIX --- */
+    border: 8px solid white; /* Fallback color */   
+    /* We use 'round' so the pixels don't stretch into long rectangles */
+    border-image-repeat: round;     
+    /* Increase slice to 33% (2 units of our 6px SVG) to keep corners sharp */
+    border-image-slice: 33%;  
+    /* Using a slightly cleaner 3x3 pixel pattern SVG */
+    border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white"/></svg>');
+    box-shadow: 8px 8px 0px #000000; 
 }
-.country-flag{
-    padding-left: 370px;
+
+.panel-title {
+    font-size: 30px;
+    color: #ffd54a;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 4px 4px 0px #cf5a00; /* 3D text effect */
 }
-.guess-capital-highest-score{
-    font-size: 40px;
-    align-self: center;
-  }
-  .crown{
-    padding-bottom: 8px;
-    padding-right: 10px;
-    vertical-align: middle;
-    height: 70px;
-    width: auto;
-  }
+
+/* Highest Score Card - Solid High Contrast */
+.highest-score-card {
+    background: #1a3c50;
+    border: 4px solid #2b6d88;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.crown {
+    font-size: 60px;
+    margin-bottom: 10px;
+    /* Keeps the emoji from looking too 'modern' */
+    filter: saturate(1.5) drop-shadow(2px 2px 0px #000);
+}
+
+.score-label {
+    font-size: 20px; /* Pixel fonts need to be small or very large */
+    color: #9ad8ff;
+    margin-bottom: 20px;
+}
+
+.score-value {
+    font-size: 34px;
+    color: #ffd54a;
+    margin: 0;
+}
+
+/* Metrics - Use a 'recessed' look */
+.metrics-card {
+    background: #07151d;
+    padding: 22px;
+    border: 3px solid #2f5d73;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.metrics-card p {
+    font-size: 20px;
+    color: #8ab6cc;
+    margin: 0;
+}
+
+.metrics-card span {
+    font-size: 20px;
+}
+
+.current-score {
+    color: #45ff9c;
+    font-size: 30px;
+}
+
+/* Correct/Wrong Boxes with "Beveled" hard borders */
+.answers-card {
+    display: flex;
+    gap: 20px;
+}
+
+.correct-box, .wrong-box {
+    flex: 1;
+    padding: 10px 5px;
+    font-size: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.correct-box {
+    background: #0e2c20;
+    color: #29ff8a;
+    border: 4px solid #29ff8a;
+    /* Mimics a physical arcade button */
+    border-right-color: #1a8f50;
+    border-bottom-color: #1a8f50;
+}
+
+.wrong-box {
+    background: #2c1111;
+    color: #ff4b4b;
+    border: 4px solid #ff4b4b;
+    border-right-color: #8f2a2a;
+    border-bottom-color: #8f2a2a;
+}
+/* center-section */
+.center-panel {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Flag Container with Pixel Border */
+.flag-container {
+    background: #000;
+    padding: 10px;
+    border: 6px solid #ffffff;
+    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flag-image {
+    width: 400px;
+    height: auto;
+    display: block;
+    /* This makes the SVG look slightly more 'aliased' to match the vibe */
+    image-rendering: pixelated; 
+}
+
+/* Input Field - Retro Terminal Style */
+.country-input {
+    width: 100%;
+    background: #07151d;
+    border: 4px solid #9ad8ff;
+    padding: 15px;
+    color: #45ff9c;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 24px;
+    text-align: center;
+    outline: none;
+    text-transform: uppercase;
+}
+
+.country-input::placeholder {
+    color: #2f5d73;
+    font-size: 18px;
+}
+
+.country-input:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 4px #0b1f2a, 0 0 0 8px #45ff9c; /* Double border effect */
+}
+
+/* Submit Button - Chunky Arcade Button */
+.submit-btn {
+    cursor: pointer;
+    background: #ffd54a;
+    color: #000;
+    border: none;
+    padding: 15px 40px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 20px;
+    font-weight: bold;
+    
+    /* 3D "Beveled" Button Effect */
+    border-bottom: 6px solid #cf5a00;
+    border-right: 6px solid #cf5a00;
+    border-top: 6px solid #fff5a0;
+    border-left: 6px solid #fff5a0;
+}
+
+.submit-btn:active {
+    /* Press effect */
+    border-top: 6px solid #cf5a00;
+    border-left: 6px solid #cf5a00;
+    border-bottom: 2px solid #cf5a00;
+    border-right: 2px solid #cf5a00;
+    transform: translateY(4px);
+}
+
+/* Result Text with blinking animation */
+.result-text {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    text-shadow: 4px 4px 0px #000;
+}
+
+.result-text.correct {
+    color: #29ff8a;
+}
+
+.result-text.wrong {
+    color: #ff4b4b;
+}
+
+/* Add a blinking effect like 'Insert Coin' text */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.result-text {
+    animation: blink 0.8s infinite;
+}
+
+/* right-section */
+.right-panel {
+    position: absolute;
+    right: 14%; /* Adjusted to match the left side symmetry */
+    top: 10%;
+    width: 450px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: #ffffff;
+    font-family: 'Press Start 2P', cursive;
+    background: #0b1f2a;
+    padding: 24px;
+
+    /* Matching the pixel border from the left */
+    border: 8px solid white;
+    border-image-repeat: round;
+    border-image-slice: 33%;
+    border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white"/></svg>');
+    
+    box-shadow: -8px 8px 0px #000000; /* Shadow goes to the left for the right panel */
+}
+
+/* Reuse the title style */
+.right-panel .panel-title {
+    font-size: 30px;
+    color: #00f2ff; /* Cyan intelligence color */
+    text-align: center;
+    margin-bottom: 5px;
+    text-shadow: 3px 3px 0px #005a61;
+}
+
+/* Hint Card Area */
+.hint-card {
+    background: #132f40;
+    padding: 15px;
+    border: 4px solid #2b6d88;
+}
+
+.hint-title {
+    font-size: 25px;
+    margin-bottom: 12px;
+    color: #9ad8ff;
+}
+
+.hint-buttons {
+    display: flex;
+    flex-direction: row; /* Change from column to row */
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.hint-btn {
+    cursor: pointer;
+    flex: 1; /* Makes both buttons equal width */
+    aspect-ratio: 1 / 1; /* Makes them large square boxes */
+    
+    background: #2b6d88;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    
+    display: flex;
+    flex-direction: column; /* Stack Emoji on top of Text */
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px;
+    
+    /* Chunky Pixel Bevel */
+    border: none;
+    border-bottom: 6px solid #07151d;
+    border-right: 6px solid #07151d;
+    border-top: 4px solid #4da9cc;
+    border-left: 4px solid #4da9cc;
+}
+
+/* Adjust font size to fit inside the boxes */
+.hint-btn span {
+    font-size: 15px;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* Larger Emojis for the big boxes */
+.hint-btn::before {
+    font-size: 30px;
+    display: block;
+}
+
+/* Hover and Click effects */
+.hint-btn:hover {
+    background: #3e8eb1;
+}
+
+.hint-btn:active {
+    border-top: 6px solid #07151d;
+    border-left: 6px solid #07151d;
+    border-bottom: 2px solid #07151d;
+    border-right: 2px solid #07151d;
+    transform: translate(4px, 4px); /* Pushes the button "down" */
+}
+
+/* Information Box - "Terminal" Style */
+.info-card {
+    background: #07151d;
+    border: 2px dashed #00f2ff; /* Dashed looks like a scanner/data box */
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.info-card h3 {
+    font-size: 20px;
+    color: #ffd54a;
+    margin-bottom: 15px;
+}
+
+.info-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #45ff9c; /* Green matrix/terminal text */
+}
+
+/* Scrollbar styling for long facts */
+.info-card {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.info-card::-webkit-scrollbar {
+    width: 8px;
+}
+.info-card::-webkit-scrollbar-track {
+    background: #0b1f2a;
+}
+.info-card::-webkit-scrollbar-thumb {
+    background: #00f2ff;
+}

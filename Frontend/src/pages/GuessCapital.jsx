@@ -1,9 +1,10 @@
-import React,{useState,useEffect} from 'react'
+import {useState,useEffect} from 'react'
 import axios from "axios";
 import "./guessCapital.css"
-import crown from "../assets/mainPage/crown.png"
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+import background from "../assets/mainPage/bg_capital.png"
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const GuessCapital = () => {
   //setting states for score, countryName and correctCapital just for checking
@@ -80,44 +81,80 @@ const GuessCapital = () => {
   }
     
   return (
-    <div id="app" className='guess-capital'>
-        <form className="container" action="/submit" method="post">
-        <h3 className='guess-capital-highest-score'>
-        <img src={crown} className='crown'/>
-        Highest Score : 
-              <span id="score" style={{ color: "black" }}> {highestScore}</span>
-        </h3>
-        <h3>
-              Current Score : 
-              <span id="score" style={{ color: "black" }}> {score}</span>
-        </h3>
-            <div className="horizontal-container">
-                <h3>
-                    Correct answers : 
-                    <span id="score" style={{ color: "green" }}> {CorrectAns}</span>
-                </h3>
-                <h3>
-                    Wrong answers : 
-                    <span id="score" style={{ color: "red"  }}> {WrongAns}</span>
-                </h3>
+  <div className="guess-country">
+  <img src={background} className="bg_img" />
+    <div className="ui-panel">
+      {/* top score board */}
+      <div className="top-score">
+        <div className="highest">
+          <p>HIGHEST SCORE</p>
+          <h1>{highestScore}</h1>
+        </div>
+
+        <div className="answer-status">
+          <span className="correct">CORRECT</span>
+        </div>
+
+        <div className="current">
+          <p>CURRENT SCORE</p>
+          <h1>{score}</h1>
+        </div>
+      </div>
+
+    {/* main area */}
+      <div className="center-game">
+        <h1 className="country-name">FRANCE</h1>
+        <input
+          type="text"
+          className="capital-input"
+          placeholder="ENTER CAPITAL"
+          value={userCapital}
+          onChange={(e) => setUserCapital(e.target.value.trim())}     
+        />
+
+        <button className="submit-btn" onClick={handleSubmit}>
+          SUBMIT
+        </button>
+
+      {/* powerUps */}
+        <div className="powerups-box">
+          <h3>POWERUPS</h3>
+          <div className="powerups">
+            <div className="powerup">
+              <p>2X</p>
+              <span>Score Multiplier</span>
             </div>
 
-            <h1 id="countryName">{countryName}</h1>
-            <div className="answer-container">
-                <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autoFocus autoComplete="off" onChange={handleChange} value={userCapital}/>
-                
+            <div className="powerup">
+              <p>💡</p>
+              <span>Hint</span>
             </div>
-            <button type="submit" onClick={handleSubmit}>SUBMIT
-            {isSubmitted && (
-            userCapital.toLowerCase() === correctCapital.toLowerCase() ? (
-              <span className="checkmark">✔</span>
-            ) : (
-              <span className="cross" id="error">✖</span>
-            )
-          )}
-            </button>
-        </form>
+
+            <div className="powerup">
+              <p>🔥</p>
+              <span>Streak</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
     </div>
+    <div className="score-stats">
+      <h3>SCORE STATS</h3>
+      <div className="stat-row">
+        <span>Correct Answers</span>
+        <span className="correct-num">25</span>
+      </div>
+
+      <div className="stat-row">
+        <span>Wrong Answers</span>
+        <span className="wrong-num">3</span>
+      </div>
+
+    </div>
+  </div>
   )
 }
 
