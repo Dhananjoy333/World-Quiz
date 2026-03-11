@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-
 import express from "express"
 import cors from "cors";
 import path,{dirname} from "path";
@@ -12,25 +11,17 @@ const port = 3000
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const frontendPath = path.join(__dirname, "../Frontend/dist");
 
-console.log(__dirname)
-console.log(frontendPath)
 // Enable CORS for all routes
 app.use(cors({origin : "*"}));
 
 //database
-const db = new pg.Client({
+const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }  // Required for NeonDB
 });
-
-async function connectDB() {
-  try {
-    await db.connect();
-    console.log("✅ Connected to NeonDB database!");
-  } catch (error) {
-    console.error("❌ Database connection error:", error);
-  }
-}
+db.on("error", (err) => {
+  console.error("Unexpected pool error", err);
+});
 
 let capitalQuiz = [];
 let flagsQuiz = [];
@@ -38,10 +29,10 @@ let flagsQuiz = [];
 // Function to fetch data before starting the server
 async function loadQuestions() {
   try {
-    const res = await db.query("SELECT * FROM capitals");
+    const res = await db.query("SELECT * FROM countries");
     capitalQuiz = res.rows;
 
-    const flagList = await db.query("SELECT * FROM flags")
+    const flagList = await db.query("SELECT * FROM countries")
     flagsQuiz = flagList.rows;
     console.log("Quiz data loaded successfully!");
   } catch (err) {
@@ -50,14 +41,20 @@ async function loadQuestions() {
 }
 
 // Function to get a random question 
-function nextQuestion(getQuestion) {
-  if (!getQuestion || getQuestion.length === 0) 
+let lastIndex = -1;
+function nextQuestion(list) {
+  if (!list || list.length === 0) 
     return { error: "No questions available" };
-  return getQuestion[Math.floor(Math.random() * getQuestion.length)];
+  let index;
+  do {
+    index = Math.floor(Math.random() * list.length);
+  } while(index === lastIndex && list.length > 1);
+  lastIndex = index;
+  return list[index];
 }
 
 
-// API endpoint to send question data
+// API endpoint to send question data for capital quiz
 app.get("/api/question", (req, res) => {
   const question = nextQuestion(capitalQuiz);
   res.json(question);
@@ -123,10 +120,9 @@ app.get("/",async (req,res)=>{
 })
 
 //server listening
-connectDB().then(()=>{
-  loadQuestions().then(()=>{
-    app.listen(port,()=>{
-      console.log(`Server running at port ${port}`)
-    })
+
+loadQuestions().then(()=>{
+  app.listen(port,()=>{
+    console.log(`Server running at port ${port}`)
   })
 })
