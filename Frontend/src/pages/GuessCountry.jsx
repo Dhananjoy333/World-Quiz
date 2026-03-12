@@ -5,6 +5,7 @@ import background from "../assets/mainPage/bg_country.png"
 import correctSound from "../assets/sounds/correct.mp3"
 import wrongSound from "../assets/sounds/error.mp3"
 import music from "../assets/sounds/lofi1.mp3"
+import { useUser } from '@clerk/react'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -13,6 +14,7 @@ const GuessCountry = () => {
     const correctAudio = useRef(new Audio(correctSound))
     const wrongAudio = useRef(new Audio(wrongSound))
     const bgmusic = useRef(new Audio(music))
+    const { user } = useUser()
 
     const [highestScore, setHighestScore] = useState(0)
     const [score,setScore] = useState(0)
@@ -37,21 +39,8 @@ const GuessCountry = () => {
         console.error("Couldn't fetch Question: ",error)
       }
     }
-
-  //fetching the highest Score from backend
-  function fetchHighestScore() {
-    axios
-      .get(`${API_BASE_URL}/highScore`) 
-      .then((response) => {
-        setHighestScore(response.data.highScoreOfGuessCountry)
-      })
-      .catch((error) => {
-        console.error("Error fetching question:", error);
-      });
-  };
   //run once on load
   useEffect(() =>{
-    fetchHighestScore()
     getQuestion()},[]
   )
   useEffect(() => {
@@ -63,6 +52,18 @@ const GuessCountry = () => {
       bgmusic.current.pause()
     }
   }, [])
+  
+  //fetch high score of user
+  useEffect(() => {
+  if(user){
+    axios
+      .get(`${API_BASE_URL}/highscore/country/${user.id}`)
+      .then((res) => {
+        setHighestScore(res.data.highScore)
+      })
+      .catch((err) => console.log(err))
+    }
+  }, [user])
 
   function startMusic(){
     if(isMusicOn && bgmusic.current.paused){
@@ -107,14 +108,19 @@ const GuessCountry = () => {
 
     //if score earned in session is higher than highestScore store in db
     if(tempScore > highestScore){
-        const response = await axios.post(`${API_BASE_URL}/high-score-country`,{tempScore})
-        setHighestScore(response.data.highestScore)
+        await axios.post(`${API_BASE_URL}/save-score`, {
+          clerkId: user.id,
+          gameMode: "country",
+          score: tempScore
+        })
+        setHighestScore(prev => Math.max(prev, tempScore))
     }
     setTimeout(() => {
         setUserInput(""); // Clear input after submission
         getQuestion(); // Get new Question
     }, 1000);
   }
+
   function toggleMusic(){
     if(isMusicOn){
       bgmusic.current.pause()

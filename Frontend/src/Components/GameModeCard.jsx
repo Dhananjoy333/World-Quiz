@@ -1,8 +1,6 @@
-import { useState } from "react";
 import './gameMode.css'
 
-function GameModeCard({ icon, title, description, isComingSoon, onStart }) {
-  const [highScore, setHighScore] = useState(0);
+function GameModeCard({ icon, title, description,highScore = 0, isComingSoon, onStart }) {
 
   if (isComingSoon) {
     return (

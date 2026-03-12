@@ -5,6 +5,7 @@ import background from "../assets/mainPage/bg_capital.png"
 import correctSound from "../assets/sounds/correct.mp3"
 import wrongSound from "../assets/sounds/error.mp3"
 import music from "../assets/sounds/lofi1.mp3"
+import { useUser } from '@clerk/react';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -13,6 +14,7 @@ const GuessCapital = () => {
   const correctAudio = useRef(new Audio(correctSound))
   const wrongAudio = useRef(new Audio(wrongSound))
   const bgmusic = useRef(new Audio(music))
+  const { user } = useUser()
 
   //setting states for score, countryName and correctCapital just for checking
     const [highestScore, setHighestScore] = useState(0)
@@ -41,21 +43,20 @@ const GuessCapital = () => {
       console.error("Error fetching question:",err)
     }
   }
-  //fetching the highest Score from backend
-  function fetchHighestScore() {
+  
+  //fetch high score of user
+  useEffect(() => {
+  if(user){
     axios
-      .get(`${API_BASE_URL}/highScore`) 
-      .then((response) => {
-        setHighestScore(response.data.highScoreOfGuessCapital)
+      .get(`${API_BASE_URL}/highscore/capital/${user.id}`)
+      .then((res) => {
+        setHighestScore(res.data.highScore)
       })
-      .catch((error) => {
-        console.error("Error fetching question:", error);
-      });
-  };
-
+      .catch((err) => console.log(err))
+    }
+  }, [user])
   //run once when website load
   useEffect(() => {
-    fetchHighestScore()
     fetchNewQuestion()
   },[]);
 
@@ -128,8 +129,12 @@ const GuessCapital = () => {
 
     //if score earned in session is higher than highestScore store in db
     if(tempScore > highestScore){
-      const response = await axios.post(`${API_BASE_URL}/high-score`,{tempScore})
-      setHighestScore(response.data.highestScore)
+        await axios.post(`${API_BASE_URL}/save-score`, {
+          clerkId: user.id,
+          gameMode: "capital",
+          score: tempScore
+        })
+        setHighestScore(prev => Math.max(prev, tempScore))
     }
     setTimeout(() => {
       setRevealedLetters(0)

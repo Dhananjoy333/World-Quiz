@@ -4,13 +4,20 @@ import "./main.css"
 import background from '../assets/mainPage/background.png'
 import GameModeCard from '../Components/GameModeCard'
 import { useNavigate } from "react-router-dom";
+import { Show,SignInButton, UserButton, useUser } from "@clerk/react";
+import toast from "react-hot-toast"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ;
 
 const Main = () => {
   const navigate = useNavigate();
+  const { user } = useUser()
 
   function startGame(mode){
+    if(!user){
+      toast("⚠️ Login to save your score")
+    }
+
     if(mode === "flag"){
       navigate("/guess-country")
     }
@@ -18,27 +25,27 @@ const Main = () => {
       navigate("/guess-capital")
     }
   }
+
   //highestScore of guess country and guess capital
   const [highestScoreGuessCountry, setHighestScoreGuessCountry] = useState(0)
   const [highestScoreGuessCapital, setHighestScoreGuessCapital] = useState(0)
 
   //fetching the highest Score from backend
-  function fetchHighestScore() {
-    axios
-      .get(`${API_BASE_URL}/highScore`) 
-      .then((response) => {
-        setHighestScoreGuessCapital(response.data.highScoreOfGuessCapital)
-        setHighestScoreGuessCountry(response.data.highScoreOfGuessCountry)
+  useEffect(() => {
+    if(user){
+      Promise.all([
+        axios.get(`${API_BASE_URL}/highscore/country/${user.id}`),
+        axios.get(`${API_BASE_URL}/highscore/capital/${user.id}`)
+      ])
+      .then(([countryRes, capitalRes]) => {
+        setHighestScoreGuessCountry(countryRes.data.highScore)
+        setHighestScoreGuessCapital(capitalRes.data.highScore)
       })
-      .catch((error) => {
-        console.error("Error fetching question:", error);
-      });
-  };
-
-  //run once on startup
-  useEffect(() =>{
-    fetchHighestScore()
-  },[])
+      .catch(err => console.log(err))
+    }else{
+      return
+    }
+  }, [user])
 
   return (
   <div className="main-page">
@@ -49,7 +56,14 @@ const Main = () => {
 
         <div className="nav-links">
           <span>LEADERBOARD</span>
-          <button className="login-btn">LOGIN</button>
+          <Show when="signed-out">
+            <SignInButton>
+              <button className="login-btn">LOGIN</button>
+            </SignInButton>
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
         </div>
       </div>
 
@@ -69,13 +83,15 @@ const Main = () => {
         <GameModeCard
           icon="🏳️"
           title="FLAG QUIZ"
-          description="Identify nations by their colors."
+          description="Identify nations by their flags."
+          highScore={highestScoreGuessCountry}
           onStart={() => startGame("flag")}
         />
         <GameModeCard
           icon="🌆"
           title="CAPITAL QUIZ"
-          description="Test your knowledge of world seats."
+          description="Test your knowledge of country capitals."
+          highScore={highestScoreGuessCapital}
           onStart={() => startGame("capital")}
         />
         {/* You can now easily add more modes like this: */}
