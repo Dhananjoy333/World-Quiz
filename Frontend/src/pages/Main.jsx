@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useRef } from 'react'
 import axios from 'axios'
 import "./main.css"
 import background from '../assets/mainPage/background.png'
@@ -6,14 +6,23 @@ import GameModeCard from '../Components/GameModeCard'
 import { useNavigate } from "react-router-dom";
 import { Show,SignInButton, UserButton, useUser } from "@clerk/react";
 import toast from "react-hot-toast"
+import music from "../assets/sounds/lofi3.mp3"
 
 const API_BASE_URL = import.meta.env.VITE_API_URL ;
 
 const Main = () => {
   const navigate = useNavigate();
   const { user } = useUser()
+  const bgmusic = useRef(new Audio(music))
+
+  function startMusic(){
+    if(isMusicOn && bgmusic.current.paused){
+      bgmusic.current.play().catch(()=>{})
+    }
+  }
 
   function startGame(mode){
+    startMusic()
     if(!user){
       toast("⚠️ Login to save your score")
     }
@@ -26,9 +35,31 @@ const Main = () => {
     }
   }
 
-  //highestScore of guess country and guess capital
   const [highestScoreGuessCountry, setHighestScoreGuessCountry] = useState(0)
   const [highestScoreGuessCapital, setHighestScoreGuessCapital] = useState(0)
+  const [leaderboard,setLeaderboard] = useState([])
+  const [isMusicOn, setIsMusicOn] = useState(false)
+
+  //function to get leaderboard data
+  function fetchLeaderboard(){
+    axios
+      .get(`${API_BASE_URL}/leaderboard`)
+      .then(res => {
+        setLeaderboard(res.data)
+      })
+      .catch(err => console.log(err))
+  }
+  useEffect(()=>{
+    fetchLeaderboard()
+  },[])
+
+  useEffect(() => {
+    bgmusic.current.loop = true
+    bgmusic.current.volume = 0.3
+    return () => {
+      bgmusic.current.pause()
+    }
+  }, [])
 
   //fetching the highest Score from backend
   useEffect(() => {
@@ -47,9 +78,21 @@ const Main = () => {
     }
   }, [user])
 
+  function toggleMusic(){
+    if(isMusicOn){
+      bgmusic.current.pause()
+    }else{
+      bgmusic.current.play().catch(()=>{})
+    }
+    setIsMusicOn(!isMusicOn)
+  }
+
   return (
   <div className="main-page">
     <img src={background} className="bg-img"/>
+    <div className="music-toggle" onClick={toggleMusic}>
+      {isMusicOn ? "🔊" : "🔇"}
+    </div>
     <div className="menu">
       <div className="navbar">
         <div className="logo"><span>🌍</span>WORLDQUIZ</div>
@@ -119,24 +162,18 @@ const Main = () => {
           </div>
           
           {/* Example Rows - You'll map these later */}
-          <div className="table-row top-1">
-            <span>01</span>
-            <span>PIXEL_PRO</span>
-            <span>99999</span>
-          </div>
-          <div className="table-row">
-            <span>02</span>
-            <span>WORLD_WIZ</span>
-            <span>85400</span>
-          </div>
-          <div className="table-row">
-            <span>03</span>
-            <span>QUIZ_KING</span>
-            <span>72100</span>
-          </div>
+          {leaderboard.map((player, index) => (
+            <div
+              className={`table-row ${index === 0 ? "top-1" : ""}`}
+              key={player.id}
+            >
+              <span>{String(index + 1).padStart(2,"0")}</span>
+              <span>{player.username}</span>
+              <span>{player.total_score}</span>
+            </div>
+          ))}
         </div>
       </div>
-
     </div>
   </div>
   )

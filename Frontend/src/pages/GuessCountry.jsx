@@ -34,7 +34,6 @@ const GuessCountry = () => {
         const response = await axios.get(`${API_BASE_URL}/flags`)
         setFlag(response.data.code.toLowerCase())
         setCorrectCountry(response.data.name)   //will use to check with userinput
-        console.log(response.data.name)
       } catch (error) {
         console.error("Couldn't fetch Question: ",error)
       }
@@ -230,7 +229,7 @@ const GuessCountry = () => {
         <div className="info-card">
             <h3>DID YOU KNOW?</h3>
             <p className="info-text">
-              The flag of Palestine dates back to the early 20th century.
+              ???
             </p>
         </div>
       </div>
