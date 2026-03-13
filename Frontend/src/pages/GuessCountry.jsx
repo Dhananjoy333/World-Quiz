@@ -230,7 +230,7 @@ const GuessCountry = () => {
         <div className="info-card">
             <h3>DID YOU KNOW?</h3>
             <p className="info-text">
-              The flag of Palestine dates back to the early 20th century.
+              ???
             </p>
         </div>
       </div>

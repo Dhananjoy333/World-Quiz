@@ -136,6 +136,27 @@ app.get("/api/highscore/:mode/:clerkId", async (req, res) => {
   }
 });
 
+//api to calculate the total of all gameModes of users and return top 10 players
+app.get("/api/leaderboard", async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT 
+        u.id,
+        u.username,
+        SUM(s.high_score) AS total_score
+      FROM users u
+      JOIN scores s ON s.user_id = u.id
+      GROUP BY u.id, u.username
+      ORDER BY total_score DESC
+      LIMIT 10;
+    `);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
 
 //rendering
 app.use(express.static(frontendPath));

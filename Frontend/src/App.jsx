@@ -14,9 +14,10 @@ function App() {
 
   useEffect(()=>{
     if (user){
+      const tag = user.id.slice(-4)
       axios.post(`${API_BASE_URL}/create-user`,{
         clerkId: user.id,
-        username: user.username
+        username: `${user.firstName}#${tag}` 
       })
     }
   },[user])
