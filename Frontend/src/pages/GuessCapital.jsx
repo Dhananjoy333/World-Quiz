@@ -37,7 +37,6 @@ const GuessCapital = () => {
       const response = await axios.get(`${API_BASE_URL}/question`)
       setCountryName(response.data.name?.trim())
       setCorrectCapital(response.data.capital)
-      console.log(response.data.capital)
     }
     catch(err){
       console.error("Error fetching question:",err)

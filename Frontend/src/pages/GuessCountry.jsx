@@ -34,7 +34,6 @@ const GuessCountry = () => {
         const response = await axios.get(`${API_BASE_URL}/flags`)
         setFlag(response.data.code.toLowerCase())
         setCorrectCountry(response.data.name)   //will use to check with userinput
-        console.log(response.data.name)
       } catch (error) {
         console.error("Couldn't fetch Question: ",error)
       }

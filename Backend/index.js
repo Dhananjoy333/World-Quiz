@@ -12,7 +12,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const frontendPath = path.join(__dirname, "../Frontend/dist");
 
 // Enable CORS for all routes
-app.use(cors({origin : "*"}));
+app.use(cors({origin : process.env.FRONTEND_URL}));
 app.use(express.json()) 
 //database connection
 const db = new pg.Pool({
