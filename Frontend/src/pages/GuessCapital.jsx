@@ -1,7 +1,7 @@
 import {useState,useEffect,useRef} from 'react'
 import axios from "axios";
 import "./guessCapital.css"
-import background from "../assets/mainPage/bg_capital.png"
+import background from "../assets/mainPage/bg_capital.avif"
 import correctSound from "../assets/sounds/correct.mp3"
 import wrongSound from "../assets/sounds/error.mp3"
 import music from "../assets/sounds/lofi1.mp3"

@@ -1,7 +1,7 @@
 import { useEffect, useState,useRef } from 'react'
 import axios from 'axios'
 import "./main.css"
-import background from '../assets/mainPage/background.png'
+import background from '../assets/mainPage/background.avif'
 import GameModeCard from '../Components/GameModeCard'
 import { useNavigate } from "react-router-dom";
 import { Show,SignInButton, UserButton, useUser } from "@clerk/react";
