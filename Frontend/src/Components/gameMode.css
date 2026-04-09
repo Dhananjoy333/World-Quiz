@@ -3,19 +3,21 @@
   display: flex;
   flex-direction: row; 
   justify-content: center;
-  align-items: flex-start; /* Keep them aligned at the top */
-  gap: 50px; /* Space between cards */
-  width: 100%; /* Ensure it takes full width */
-  flex-wrap: wrap; /* Allows cards to go to next line on mobile instead of breaking */
+  align-items: flex-start;
+  gap: 40px; 
+  width: 100%;
+  flex-wrap: wrap; 
+  padding: 20px;
+  box-sizing: border-box;
 }
 .game-card {
   width: 260px;
-  padding: 40px 20px 25px 35px; /* Extra left padding for the accent bar */
+  padding: 40px 20px 25px 35px; 
   position: relative;
-  background: #2d3748; /* Slightly lighter slate */
+  background: #2d3748; 
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Left-aligned text looks more like a list/menu */
+  align-items: flex-start; 
   text-align: left;
   
   /* Pixel Border */
@@ -24,18 +26,15 @@
     8px 0 0 rgba(0,0,0,0.2); /* Soft drop shadow for depth */
 }
 .arcade-cabinet {
-  width: 380px;
-  background: #1e293b; /* Dark Cabinet Body */
+  width: 380px; 
+  background: #1e293b;
   position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  
-  /* Thick Pixel Border */
   border: 4px solid #000;
-  box-shadow: 
-    10px 10px 0px rgba(0,0,0,0.3), /* Deep shadow for depth */
-    inset 4px 4px 0px rgba(255,255,255,0.05);
+  box-shadow: 10px 10px 0px rgba(0,0,0,0.3);
+  transition: transform 0.2s steps(2);
 }
 
 /* 1. The Marquee (Top) */
@@ -60,7 +59,7 @@
 .cabinet-screen {
   margin: 15px;
   height: 200px;
-  background: #0f172a; /* Deep black/blue screen */
+  background: #0f172a; 
   border: 4px solid #475569;
   position: relative;
   display: flex;
@@ -93,7 +92,7 @@
   z-index: 3;
 }
 
-/* 3. The Control Panel (Bottom) */
+/* The Control Panel (Bottom) */
 .cabinet-panel {
   padding: 15px;
   background: #1e293b;
@@ -137,7 +136,7 @@
 
 /* Hover State - "Power On" Effect */
 .arcade-cabinet:hover .cabinet-screen {
-  background: #1e3a8a; /* Screen lights up blue */
+  background: #1e3a8a; 
   border-color: #facc15;
 }
 
@@ -147,25 +146,25 @@
 
 /* Grayed out / Powered Off Look */
 .arcade-cabinet.coming-soon {
-  filter: grayscale(0.8); /* Dulls the colors */
+  filter: grayscale(0.8); 
   opacity: 0.8;
   cursor: not-allowed;
 }
 
 .arcade-cabinet.coming-soon .cabinet-screen {
-  background: #020617; /* Even darker screen */
+  background: #020617; 
   border-color: #334155;
 }
 
 /* The "Out of Order" Tape Effect */
 .out-of-order-tape {
   position: absolute;
-  background: #facc15; /* Warning Yellow */
+  background: #facc15; 
   color: #000;
   font-family: 'Press Start 2P', cursive;
   font-size: 10px;
   padding: 8px 20px;
-  transform: rotate(-15deg); /* Slanted like tape */
+  transform: rotate(-15deg); 
   z-index: 10;
   border: 2px dashed #000;
   white-space: nowrap;
@@ -180,5 +179,85 @@
 }
 
 .arcade-cabinet.coming-soon:hover {
-  transform: none; /* Disable the pop-up animation */
+  transform: none; 
+}
+
+@media (max-width: 1280px) {
+  .game-modes {
+    gap: 25px;
+    margin-top: 50px;
+  }
+
+  .arcade-cabinet {
+    width: 300px; 
+  }
+
+  .cabinet-screen {
+    height: 160px;
+    margin: 10px;
+  }
+
+  .game-icon {
+    font-size: 40px;
+  }
+
+  .game-title {
+    font-size: 16px;
+  }
+
+  .game-desc {
+    font-size: 11px;
+    height: 35px;
+  }
+
+  .play-btn {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* --- MOBILE RESPONSIVENESS (768px and below) --- */
+@media (max-width: 768px) {
+  .game-modes {
+    margin-top: 30px;
+    gap: 20px;
+  }
+
+  .arcade-cabinet {
+    width: 90%; 
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .cabinet-top {
+    height: 40px;
+  }
+
+  .hi-score-lcd {
+    font-size: 8px; 
+  }
+
+  .cabinet-screen {
+    height: 140px;
+    margin: 8px;
+  }
+
+  .game-icon {
+    font-size: 35px;
+  }
+
+  .game-title {
+    font-size: 14px;
+  }
+
+  .game-desc {
+    font-size: 10px;
+    height: auto; 
+    margin-bottom: 10px;
+  }
+
+  .play-btn {
+    font-size: 12px;
+    padding: 12px;
+  }
 }

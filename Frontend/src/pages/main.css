@@ -1,9 +1,11 @@
-.main-page{
-  position:relative;
-  height:100vh;
-  width:100vw;
-  overflow:hidden;
-  font-family:'Press Start 2P', cursive;
+.main-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Press Start 2P', cursive;
+  padding-bottom: 60px;
 }
 
 .bg-img{
@@ -35,13 +37,14 @@
   box-shadow:0 0 12px #00eaff;
   transform:scale(1.05);
 }
-.menu{
-  position:relative;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+.menu {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .navbar {
   position: absolute;
   top: 25px;
@@ -64,9 +67,9 @@
     ),
     linear-gradient(
       180deg, 
-      #475569 0%, #475569 15%,   /* Light top highlight */
-      #334155 15%, #334155 85%,  /* Main body */
-      #1e293b 85%, #1e293b 100%  /* Darker bottom shadow */
+      #475569 0%, #475569 15%,   
+      #334155 15%, #334155 85%,  
+      #1e293b 85%, #1e293b 100%  
     );
 
   /* PIXELATED CORNERS (The 'staircase' look) */
@@ -140,47 +143,33 @@
   text-align:center;
 }
 
-
-.hero-title{
-  font-family:'Press Start 2P', cursive;
-  font-size:62px;
-  color:#fde047;
-  letter-spacing:6px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-
-  /* PIXEL OUTLINE */
-   text-shadow:
-    -3px -3px 0 #000,
-     3px -3px 0 #000,
-    -3px  3px 0 #000,
-     3px  3px 0 #000,
-
-    -6px 0 0 #78350f,
-     6px 0 0 #78350f,
-     0 -6px 0 #78350f,
-     0  6px 0 #78350f,
-
-     0 0 12px #f59e0b;
+.hero-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(24px, 8vw, 62px); 
+  color: #fde047;
+  letter-spacing: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 3px 3px 0 #000;
 }
 
 .hero-globe{
   font-size:62px;
 }
-/* 1. The Retro Pulse - Swapping colors rather than blurring */
+/*The Retro Pulse */
 @keyframes pulseColor {
   0% {
-    color: #fde047; /* Bright Yellow */
-    text-shadow: 4px 4px 0px #b45309; /* Deep Orange Hard Shadow */
+    color: #fde047; 
+    text-shadow: 4px 4px 0px #b45309;
     transform: scale(1);
   }
   100% {
-    color: #ffffff; /* Flash to White */
-    text-shadow: 4px 4px 0px #f59e0b; /* Lighter Orange Hard Shadow */
-    transform: scale(1.02); /* Very slight pop */
+    color: #ffffff; 
+    text-shadow: 4px 4px 0px #f59e0b;
+    transform: scale(1.02); 
   }
 }
 
@@ -190,10 +179,9 @@
   display: inline-block;
   position: relative;
 
-  /* Use a solid, dark slate for better contrast */
+
   background-color: #1e293b;
-  
-  /* PIXELATED BORDER (Matches your Navbar) */
+
   box-shadow:
     0 -4px 0 #fbbf24,
     4px 0 0 #fbbf24,
@@ -294,4 +282,108 @@
 
 .star {
   animation: pulse 1s infinite steps(2);
+}
+
+/* --- LAPTOP STRATEGY (Screens smaller than 1280px) --- */
+@media (max-width: 1280px) {
+  .hero{
+    margin-top: 100px;
+  }
+  .hero-title {
+    font-size: 30px;
+    letter-spacing: 3px;
+  }
+
+  .hero-globe {
+    font-size: 40px;
+  }
+
+  .hero-subtitle {
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  .navbar {
+    width: 90%;
+    height: 60px;
+  }
+
+  .logo { font-size: 12px; }
+  .logo span { font-size: 24px; }
+
+  .game-modes {
+    gap:15px;
+  }
+
+  .music-toggle{
+    top: 95px;
+    font-size: 20px;
+  }
+
+}
+
+/* --- MOBILE STRATEGY (Screens smaller than 768px) --- */
+@media (max-width: 768px) {
+  .music-toggle {
+    top: 20px;
+    left: 20px;
+    font-size: 20px;
+    padding: 8px;
+  }
+
+  .navbar {
+    top: 15px;
+    width: 95%;
+    flex-direction: column;
+    height: auto;
+    padding: 15px 10px;
+    gap: 10px;
+  }
+
+  .nav-links {
+    gap: 15px;
+    font-size: 9px;
+  }
+
+  .hero {
+    margin-top: 180px; 
+  }
+
+  .hero-title {
+    font-size: 22px;
+    letter-spacing: 1px;
+    flex-direction: column; 
+  }
+
+  .hero-globe {
+    font-size: 30px;
+  }
+
+  .mode-banner {
+    padding: 15px 20px;
+  }
+
+  .hero-subtitle {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .leaderboard-container {
+    width: 80%;
+    margin-top: 40px;
+  }
+
+  .leaderboard-header h2 {
+    font-size: 12px;
+  }
+
+  .table-header, .table-row {
+    font-size: 8px;
+    padding: 12px 8px;
+    grid-template-columns: 0.5fr 1.5fr 1fr; 
+  }
+  .login-btn{
+    font-size: 9px;
+    margin-bottom: 7px;
+  }
 }

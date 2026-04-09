@@ -137,7 +137,7 @@ const Main = () => {
           highScore={highestScoreGuessCapital}
           onStart={() => startGame("capital")}
         />
-        {/* You can now easily add more modes like this: */}
+
         <GameModeCard
           icon="🗺️"
           title="MAP MASTER"
@@ -146,7 +146,7 @@ const Main = () => {
         <GameModeCard isComingSoon={true} />
       </div>
 
-      {/* NEW: GLOBAL LEADERBOARD SECTION */}
+      {/* LeaderBoard */}
       <div className="leaderboard-container">
         <div className="leaderboard-header">
           <span className="star">★</span>
@@ -161,7 +161,6 @@ const Main = () => {
             <span>SCORE</span>
           </div>
           
-          {/* Example Rows - You'll map these later */}
           {leaderboard.map((player, index) => (
             <div
               className={`table-row ${index === 0 ? "top-1" : ""}`}

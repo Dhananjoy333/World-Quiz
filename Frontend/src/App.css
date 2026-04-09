@@ -1,9 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Press+Start+2P&display=swap');
+
+:root {
+  /* --- GAME FONTS (Press Start 2P) --- */
+  --game-title: 32px;
+  --game-subtitle: 20px;
+  --game-body: 14px;
+  --game-label: 12px;
+  --game-btn: 18px;
+
+  /* --- UI FONTS (Poppins) --- */
+  --ui-title: 28px;
+  --ui-body: 16px;
+  --ui-small: 14px;
+}
+
+/* --- LAPTOP SCALING (1280px) --- */
+@media (max-width: 1280px) {
+  :root {
+    --game-title: 22px;
+    --game-subtitle: 16px;
+    --game-body: 11px;
+    --game-label: 10px;
+    --game-btn: 14px;
+
+    --ui-title: 22px;
+    --ui-body: 14px;
+    --ui-small: 12px;
+  }
+}
+
+/* --- MOBILE SCALING (768px) --- */
+@media (max-width: 768px) {
+  :root {
+    --game-title: 18px;
+    --game-subtitle: 14px;
+    --game-body: 9px;
+    --game-label: 8px;
+    --game-btn: 12px;
+
+    --ui-title: 18px;
+    --ui-body: 13px;
+    --ui-small: 11px;
+  }
+}
+
 body {
-  font-family: "Poppins",sans-serif;
-  background-repeat: no-repeat;
-  background-size: cover;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }

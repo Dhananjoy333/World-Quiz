@@ -1,60 +1,74 @@
 /* Import a Pixel Font - 'Press Start 2P' is the gold standard for retro */
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-.guess-country{
-    position:relative;
-    height:100vh;
-    width:100vw;
-    overflow:hidden;
+.guess-country {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: grid;
+    /* Desktop: 3 columns */
+    grid-template-columns: 1fr 1.2fr 1fr; 
+    align-items: start;
+    justify-items: center;
+    padding: 100px 40px 40px 40px;
+    box-sizing: border-box;
+    gap: 30px;
 }
-.bg_img{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:-1;
+.bg_img {
+    position: fixed; /* Fixed so it doesn't scroll with content */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
     image-rendering: pixelated;
-    image-rendering: crisp-edges;
 }
-.music-toggle{
-  position:absolute;
-  top:70px;
-  left:50px;
-  font-size:40px;
-  cursor:pointer;
-  background:#000;
-  padding:8px 12px;
-  border:2px solid #00eaff;
-  border-radius:6px;
+.music-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    cursor: pointer;
+    background: #000;
+    padding: 8px;
+    border: 2px solid #00eaff;
+    border-radius: 6px;
+    z-index: 100;
 }
 .music-toggle:hover{
   box-shadow:0 0 10px #00eaff;
 }
 
-.left-panel {
-    position: absolute;
-    left: 14%;
-    top: 10%;
-    width: 450px;
-    height: 710px;
+
+.left-panel, .right-panel, .center-panel {
+    width: 100%;
+    max-width: 450px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     color: #ffffff;
     font-family: 'Press Start 2P', cursive;
-    background: #0b1f2a;
-    padding: 24px;
-    /* --- THE FIX --- */
-    border: 8px solid white; /* Fallback color */   
-    /* We use 'round' so the pixels don't stretch into long rectangles */
-    border-image-repeat: round;     
-    /* Increase slice to 33% (2 units of our 6px SVG) to keep corners sharp */
-    border-image-slice: 33%;  
-    /* Using a slightly cleaner 3x3 pixel pattern SVG */
-    border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white"/></svg>');
-    box-shadow: 8px 8px 0px #000000; 
+    box-sizing: border-box;
 }
+
+/* Left & Right Panel Styling */
+.left-panel, .right-panel {
+    background: #0b1f2a;
+    padding: 20px;
+    border: 8px solid white;
+    border-image-repeat: round;
+    border-image-slice: 33%;
+    border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white"/></svg>');
+}
+
+.left-panel { box-shadow: 8px 8px 0px #000000; }
+.right-panel { box-shadow: -8px 8px 0px #000000; }
+
+.center-panel {
+    align-items: center;
+    gap: 25px;
+}
+
 
 .panel-title {
     font-size: 30px;
@@ -148,18 +162,7 @@
     border-bottom-color: #8f2a2a;
 }
 /* center-section */
-.center-panel {
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    font-family: 'Press Start 2P', cursive;
-}
+
 
 /* Flag Container with Pixel Border */
 .flag-container {
@@ -300,29 +303,6 @@
   color: #ccc;
 }
 /* right-section */
-.right-panel {
-    position: absolute;
-    right: 14%; /* Adjusted to match the left side symmetry */
-    top: 10%;
-    width: 450px;
-    height: 600px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    color: #ffffff;
-    font-family: 'Press Start 2P', cursive;
-    background: #0b1f2a;
-    padding: 24px;
-
-    /* Matching the pixel border from the left */
-    border: 8px solid white;
-    border-image-repeat: round;
-    border-image-slice: 33%;
-    border-image-source: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="6" height="6"><path d="M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z" fill="white"/></svg>');
-    
-    box-shadow: -8px 8px 0px #000000; /* Shadow goes to the left for the right panel */
-}
-
 /* Reuse the title style */
 .right-panel .panel-title {
     font-size: 30px;
@@ -440,4 +420,75 @@
 }
 .info-card::-webkit-scrollbar-thumb {
     background: #00f2ff;
+}
+
+/* --- LAPTOP RESPONSIVENESS (1280px and below) --- */
+@media (max-width: 1366px) {
+    .guess-country {
+        grid-template-columns: 1fr 1.5fr 1fr;
+        padding: 80px 20px 20px 20px;
+        gap: 15px;
+    }
+    .highest-score-card{
+        padding: 5px;
+    }
+    .panel-title { font-size: 15px; }
+    .crown{font-size: 25px;}
+    .score-label { font-size: 14px; }
+    .score-value { font-size: 24px; }
+    .metrics-card p{font-size: 15px;}
+    .metrics-card span{font-size: 15px;}
+    .correct-box,.wrong-box{font-size: 15px;}
+    .current-score { font-size: 22px; }
+    .flag-image { width: 100%; max-width: 320px; }
+    .country-input { font-size: 15px; }
+    .submit-btn{font-size: 15px;}
+}
+
+/* Tablets (1024px and below) */
+@media (max-width: 1024px) {
+    .guess-country {
+        grid-template-columns: 1fr 1fr; /* Two columns */
+        padding-top: 100px;
+    }
+
+    .center-panel {
+        grid-column: span 2; /* Center panel takes full width top */
+        order: -1; 
+        max-width: 500px;
+    }
+}
+
+/* Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+    .guess-country {
+        display: flex; /* Stack vertically */
+        flex-direction: column;
+        align-items: center;
+        padding: 80px 15px 40px 15px;
+    }
+
+    .left-panel, .right-panel, .center-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .flag-image { max-width: 250px; }
+    .country-input { font-size: 16px; padding: 12px; }
+    .submit-btn { font-size: 16px; width: 100%; }
+    
+    .answers-card {
+        flex-direction: row;
+    }
+    
+    .hint-buttons {
+        flex-direction: row;
+    }
+
+    .hint-btn {
+        height: 100px; /* Reduced height for mobile */
+    }
+
+    .hint-logo { font-size: 24px; }
+    .hint-text { font-size: 10px; }
 }

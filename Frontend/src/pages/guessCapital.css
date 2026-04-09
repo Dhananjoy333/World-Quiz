@@ -163,7 +163,6 @@
 }
 
 /* Submit button */
-
 .submit-btn {
   width: 300px;
   height: 75px;
@@ -296,11 +295,10 @@
   width: 350px;
   background: #000;
   
-  /* Straight, thick arcade border */
   border: 4px solid #fff;
   box-shadow: 
     0 0 0 4px #000, 
-    0 0 0 8px #ff00ff; /* Pink outer frame */
+    0 0 0 8px #ff00ff;
     
   padding: 25px;
   color: white;
@@ -312,7 +310,6 @@
   margin-bottom: 35px;
   font-size: 25px;
   color: #ffd400;
-  /* Retro "header" bar */
   background: #222;
   padding: 15px;
   border: 2px solid #444;
@@ -323,7 +320,7 @@
   align-items: center;
   margin-bottom: 15px;
   font-size: 17px;
-  border-bottom: 2px dashed #333; /* Adds a techy separator */
+  border-bottom: 2px dashed #333;
   padding-bottom: 10px;
 }
 
@@ -331,7 +328,7 @@
 .wrong-num {
   font-size: 23px;
   padding: 2px 8px;
-  background: #111; /* Dark background for the number "display" */
+  background: #111;
   border: 2px solid #333;
 }
 
@@ -356,4 +353,54 @@
   border-right: 6px solid #00d9ff;
   border-top: 6px solid #00d9ff;
   pointer-events: none;
+}
+@media (max-width: 1300px) {
+  .score-stats{
+    left: 240px;
+    bottom: 170px;
+    width: 200px;
+
+  }
+  .score-stats h3{
+    font-size: 15px;
+  }
+  .stat-row span{
+    font-size: 10px;
+  }
+  .ui-panel{
+    left: 520px;
+    top: 150px;
+    width: 570px;
+  }
+  .highest,
+  .current{
+    text-align: center;
+    font-size: 10px;
+    padding: 15px;
+  }
+  .capital-input{
+    width: 400px;
+    height: 50px;
+    font-size: 10px;
+  }
+  .submit-btn{
+    font-size: 15px;
+    height: auto;
+  }
+  .powerup{
+    width: 100px; 
+  }
+  .powerup p{
+    font-size: 17px;
+  }
+  .powerup span{
+    font-size: 7px;
+  }
+  .powerups-box{
+    width: auto;
+    height: auto;
+  }
+  .powerups-box h3{
+    font-size: 10px;
+  }
 }
